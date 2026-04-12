@@ -282,6 +282,7 @@ function getSmoothPath(geoPoints, proj, itemIndex = 0) {
 
 export default function MapDashboard() {
   const navigate = useNavigate();
+  const [activeNav, setActiveNav] = useState(null);
   const [year, setYear] = useState(1420);
   const [season, setSeason] = useState("All");
   const [tooltip, setTooltip] = useState(null);
@@ -376,9 +377,37 @@ export default function MapDashboard() {
           font-weight: 600;
         }
         @media (min-width: 768px) { .md-nav { display: flex; } }
-        .md-nav a { text-decoration: none; color: #4a0e0e; transition: color 0.3s; }
-        .md-nav a:hover { color: #8c1a1a; }
-        .md-nav a.active { border-bottom: 2px solid #4a0e0e; padding-bottom: 4px; }
+        .md-nav a { 
+          text-decoration: none; 
+          color: #4a0e0e; 
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+          position: relative;
+          padding: 4px 0;
+        }
+        .md-nav a::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: #8c1a1a;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .md-nav a:hover { 
+          color: #8c1a1a; 
+          transform: translateY(-2px);
+        }
+        .md-nav a:hover::after {
+          width: 100%;
+        }
+        .md-nav a.active {
+          color: #8c1a1a;
+        }
+        .md-nav a.active::after {
+          width: 100%;
+          background-color: #4a0e0e;
+        }
         
         .md-explore-btn {
           background: #4a0e0e; color: #fff; text-decoration: none;
@@ -515,9 +544,27 @@ export default function MapDashboard() {
             Interactive Map
           </div>
           <nav className="md-nav font-headline">
-            <a href="#arch" className="active" onClick={(e) => e.preventDefault()}>Architecture</a>
-            <a href="#hist" onClick={(e) => e.preventDefault()}>History</a>
-            <a href="#palaces" onClick={(e) => e.preventDefault()}>Palaces</a>
+            <a 
+              href="/#introduction" 
+              className={activeNav === "Introduction" ? "active" : ""} 
+              onClick={() => setActiveNav("Introduction")}
+            >
+              Introduction
+            </a>
+            <a 
+              href="/#interactive" 
+              className={activeNav === "Interactive" ? "active" : ""} 
+              onClick={() => setActiveNav("Interactive")}
+            >
+              Interactive
+            </a>
+            <a 
+              href="/#structure" 
+              className={activeNav === "Structure" ? "active" : ""} 
+              onClick={() => setActiveNav("Structure")}
+            >
+              Structure
+            </a>
           </nav>
           <button className="md-explore-btn font-headline" onClick={() => navigate("/")}>
             Back to Home

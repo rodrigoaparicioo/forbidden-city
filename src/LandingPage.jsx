@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const [activeNav, setActiveNav] = React.useState(null);
 
   return (
     <div className="landing-page-root">
@@ -83,14 +84,34 @@ export default function LandingPage() {
         .lp-nav-links a {
           text-decoration: none;
           color: var(--on-surface);
-          transition: color 0.5s;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          padding: 4px 0;
+        }
+        .lp-nav-links a::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: var(--secondary);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .lp-nav-links a:hover { 
+          color: var(--primary); 
+          transform: translateY(-2px);
+        }
+        .lp-nav-links a:hover::after {
+          width: 100%;
         }
         .lp-nav-links a.active {
           color: var(--primary);
-          border-bottom: 2px solid var(--secondary);
-          padding-bottom: 4px;
         }
-        .lp-nav-links a:hover { color: var(--primary); }
+        .lp-nav-links a.active::after {
+          width: 100%;
+          background-color: var(--primary);
+        }
         .lp-nav-btn {
           padding: 8px 24px;
           background: var(--primary);
@@ -462,10 +483,34 @@ export default function LandingPage() {
             故宫 AI
           </div>
           <div className="lp-nav-links font-headline">
-            <a href="#architecture" className="active">Architecture</a>
-            <a href="#history">History</a>
-            <a href="#palaces">Palaces</a>
-            <a href="#exhibits">Exhibits</a>
+            <a
+              href="#architecture"
+              className={activeNav === "Architecture" ? "active" : ""}
+              onClick={() => setActiveNav("Architecture")}
+            >
+              Architecture
+            </a>
+            <a
+              href="#structure"
+              className={activeNav === "Structure" ? "active" : ""}
+              onClick={() => setActiveNav("Structure")}
+            >
+              Structure
+            </a>
+            <a
+              href="#interactive"
+              className={activeNav === "Interactive" ? "active" : ""}
+              onClick={() => setActiveNav("Interactive")}
+            >
+              Interactive
+            </a>
+            <a
+              href="#exhibits"
+              className={activeNav === "Exhibits" ? "active" : ""}
+              onClick={() => setActiveNav("Exhibits")}
+            >
+              Exhibits
+            </a>
           </div>
           <button className="lp-nav-btn font-headline">
             Explore Now
@@ -487,7 +532,7 @@ export default function LandingPage() {
               故宫 AI
             </h1>
             <p className="hero-sub font-body">
-              Where the Son of Heaven resided and history was etched in stone and timber.
+              古代工程模拟系统
             </p>
             <div className="hero-btns">
               <button
@@ -514,8 +559,8 @@ export default function LandingPage() {
           <div className="lattice-pattern" />
           <div className="container sec-1-grid">
             <div className="sec-1-content">
-              <span className="subheading font-headline">Cultural Essence</span>
-              <h2 className="sec-title font-headline">A Legacy in Crimson &amp; Gold</h2>
+              <span className="subheading font-headline">Introduction</span>
+              <h2 className="sec-title font-headline">How was 故宫 built?</h2>
               <div className="font-body">
                 <p className="sec-text">
                   In the cosmology of ancient China, colors were never mere decoration. The deep vermilion of the palace walls represents Fire and good fortune, while the brilliant yellow of the glazed roof tiles was reserved exclusively for the Emperor, symbolizing the Earth at the center of the universe.
@@ -540,77 +585,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ── SECTION 2: EXPLORATION GRID ── */}
-        <section className="sec-2" id="history">
-          <div className="container">
-            <div className="sec-2-header">
-              <h2 className="sec-2-title font-headline">Explore the Forbidden City</h2>
-              <div className="sec-2-line" />
-            </div>
-            <div className="cards">
-              {/* Card 1 */}
-              <Link to="/map" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                <div className="card">
-                  <div className="card-img-box">
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXTlFYXzMYf5BEghQJEsKzkh_kfOTqgByunNjq0OyppHI7oE-SFm98A_BQ-MF_W6iKhWLiH7sROI6E4a4WBcfqWm_DrYRP-gTtGfwFI22Ce4eoM2ul8SZzwnxX13I7uuyo6-q4r6_5DLlcn51RKRRbwKEM81TscJWmhemdQaZYMwe4fpPZvcinSOmsU7fdlqiCTNxmeHBdgTrC7nsU2d7fNUltchAuJ5gVEaqCM42o8kspTuf90tTlkVchX11OfwUmuOEv9F4EjtI_"
-                      alt="Hall of Preserving Harmony"
-                      className="card-img"
-                    />
-                  </div>
-                  <div className="card-body">
-                    <h3 className="card-title font-headline">Hall of Preserving Harmony</h3>
-                    <p className="card-desc font-body">The site of the final imperial examinations and grand banquets.</p>
-                    <span className="card-link font-headline">
-                      Discover more <span className="material-symbols-outlined">arrow_right_alt</span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-              {/* Card 2 */}
-              <Link to="/yhlas" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                <div className="card">
-                  <div className="card-img-box">
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLfppiah6T2-3F3zylt0j65ZuTQ23G2hL5ZDnGLFvINqAX_fCR4sNZ9oZujaxkEuxmqrVY23aBLpWN3VOlmGAJAP5y8wO3vBrph9tJgJq94-Fvts9AhUHwJW7d7-D9e29YCDBHVasj2Qa9HKQMACiTMnqxnxSZCd6OrUIyQvX5so_ZyRVR-5iYiGZ_jKDy6icyPmJcldDRAPetNF3SpY_HA12k6lt2hvHaCEZs0T555nV7tiJa-QT41OKjJ-cOJV5MV4pMWPgLkNYA"
-                      alt="Palace of Heavenly Purity"
-                      className="card-img"
-                    />
-                  </div>
-                  <div className="card-body">
-                    <h3 className="card-title font-headline">Palace of Heavenly Purity</h3>
-                    <p className="card-desc font-body">The primary residence of Emperors during the Ming and early Qing dynasties.</p>
-                    <span className="card-link font-headline">
-                      Discover more <span className="material-symbols-outlined">arrow_right_alt</span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-              {/* Card 3 */}
-              <Link to="/yhlas" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                <div className="card">
-                  <div className="card-img-box">
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2lzGYAbDXIfd31RYy7pNYweh1ref2WHTZKieN8Q-Id2L6FOFY1GESnxCxuBra8U25E2Tn08kU23aEa9F4ozYgwikVPtrF8KdLoaODgh2Kvs-i3AkrwZb6HSv0ZG2DBZbyCQ6HeXwTofK4rHa7xjatfLi0bqqVexftVGcRavqThv6kNVkRmmNJLLnxWIJ_8wRt_Hco10JXQ3qXRzm-_6ycByPSY_7ZJy3-1NENSZaEc__Ux_jL2zsg5nwXXaQwDk7AjkP8bQ2b6zXI"
-                      alt="Imperial Garden"
-                      className="card-img"
-                    />
-                  </div>
-                  <div className="card-body">
-                    <h3 className="card-title font-headline">The Imperial Garden</h3>
-                    <p className="card-desc font-body">A private sanctuary of rockeries, cypress trees, and classical pavilions.</p>
-                    <span className="card-link font-headline">
-                      Discover more <span className="material-symbols-outlined">arrow_right_alt</span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ── SECTION 3: MARVELS ── */}
-        <section className="sec-3" id="palaces">
+        {/* ── SECTION 2: MARVELS ── */}
+        <section className="sec-3" id="structure">
           <div className="container sec-3-grid">
             <div>
               <span className="subheading-alt font-headline">Structural Ingenuity</span>
@@ -648,6 +624,76 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+
+        {/* ── SECTION 3: EXPLORATION GRID ── */}
+        <section className="sec-2" id="interactive">
+          <div className="container">
+            <div className="sec-2-header">
+              <h2 className="sec-2-title font-headline">Explore the Forbidden City</h2>
+              <div className="sec-2-line" />
+            </div>
+            <div className="cards">
+              {/* Card 1 */}
+              <Link to="/map" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                <div className="card">
+                  <div className="card-img-box">
+                    <img
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXTlFYXzMYf5BEghQJEsKzkh_kfOTqgByunNjq0OyppHI7oE-SFm98A_BQ-MF_W6iKhWLiH7sROI6E4a4WBcfqWm_DrYRP-gTtGfwFI22Ce4eoM2ul8SZzwnxX13I7uuyo6-q4r6_5DLlcn51RKRRbwKEM81TscJWmhemdQaZYMwe4fpPZvcinSOmsU7fdlqiCTNxmeHBdgTrC7nsU2d7fNUltchAuJ5gVEaqCM42o8kspTuf90tTlkVchX11OfwUmuOEv9F4EjtI_"
+                      alt="Hall of Preserving Harmony"
+                      className="card-img"
+                    />
+                  </div>
+                  <div className="card-body">
+                    <h3 className="card-title font-headline">Interactive Map</h3>
+                    <p className="card-desc font-body">The site of the final imperial examinations and grand banquets.</p>
+                    <span className="card-link font-headline">
+                      Discover more <span className="material-symbols-outlined">arrow_right_alt</span>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+              {/* Card 2 */}
+              <Link to="/yhlas" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                <div className="card">
+                  <div className="card-img-box">
+                    <img
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLfppiah6T2-3F3zylt0j65ZuTQ23G2hL5ZDnGLFvINqAX_fCR4sNZ9oZujaxkEuxmqrVY23aBLpWN3VOlmGAJAP5y8wO3vBrph9tJgJq94-Fvts9AhUHwJW7d7-D9e29YCDBHVasj2Qa9HKQMACiTMnqxnxSZCd6OrUIyQvX5so_ZyRVR-5iYiGZ_jKDy6icyPmJcldDRAPetNF3SpY_HA12k6lt2hvHaCEZs0T555nV7tiJa-QT41OKjJ-cOJV5MV4pMWPgLkNYA"
+                      alt="Palace of Heavenly Purity"
+                      className="card-img"
+                    />
+                  </div>
+                  <div className="card-body">
+                    <h3 className="card-title font-headline">Earthquake simulator</h3>
+                    <p className="card-desc font-body">The primary residence of Emperors during the Ming and early Qing dynasties.</p>
+                    <span className="card-link font-headline">
+                      Discover more <span className="material-symbols-outlined">arrow_right_alt</span>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+              {/* Card 3 */}
+              <Link to="/yhlas" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                <div className="card">
+                  <div className="card-img-box">
+                    <img
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2lzGYAbDXIfd31RYy7pNYweh1ref2WHTZKieN8Q-Id2L6FOFY1GESnxCxuBra8U25E2Tn08kU23aEa9F4ozYgwikVPtrF8KdLoaODgh2Kvs-i3AkrwZb6HSv0ZG2DBZbyCQ6HeXwTofK4rHa7xjatfLi0bqqVexftVGcRavqThv6kNVkRmmNJLLnxWIJ_8wRt_Hco10JXQ3qXRzm-_6ycByPSY_7ZJy3-1NENSZaEc__Ux_jL2zsg5nwXXaQwDk7AjkP8bQ2b6zXI"
+                      alt="Imperial Garden"
+                      className="card-img"
+                    />
+                  </div>
+                  <div className="card-body">
+                    <h3 className="card-title font-headline">Chatbot</h3>
+                    <p className="card-desc font-body">Here we can put the chatbot or just delete this entire section if it remains only inside your simulator</p>
+                    <span className="card-link font-headline">
+                      Discover more <span className="material-symbols-outlined">arrow_right_alt</span>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+
 
 
       </main>
